@@ -1,5 +1,5 @@
 import os
-from PIL.Image import Image
+from PIL import Image
 from utils.xmlUtils import get_attribute_from_xml, get_bound_box_object
 from tensorflow.keras.preprocessing import image
 import numpy as np
