@@ -7,13 +7,14 @@ import pprint
 import numpy as np
 from lime import lime_image
 import os
+import time
 from dataset_generator.generate_datasets import generate_train_dataset, generate_test_dataset
 from model.generate_model import create_model, create_second_model, create_third_model, generate_plot
 from utils.filesystemUtils import show_select_folder_dialog
 from utils.imageUtils import transform_img_fn, crop_images_from_directory
 
 if __name__ == '__main__':
-    # directory = show_select_folder_dialog()
+    #directory = show_select_folder_dialog()
     dest_dir = os.path.join("/Users/bernardoalmeida/Documents/Dev/mask_detection")
     # crop_images_from_directory(directory, dest_dir)
     url = pathlib.Path("/Users/bernardoalmeida/Documents/Tese/to_label/663597.jpg")
@@ -24,13 +25,11 @@ if __name__ == '__main__':
 
     train_ds = generate_train_dataset(directory=dest_dir,
                                       img_width=img_width,
-                                      img_height=img_height,
-                                      batch_size=batch_size)
+                                      img_height=img_height)
 
     val_ds = generate_test_dataset(directory=dest_dir,
                                    img_width=img_width,
-                                   img_height=img_height,
-                                   batch_size=batch_size)
+                                   img_height=img_height)
 
     model1 = create_model(img_height=img_height, img_width=img_width, num_classes=2)
 
@@ -38,21 +37,22 @@ if __name__ == '__main__':
 
     model3 = create_third_model(img_height=img_height, img_width=img_width, num_classes=2)
 
-    callback = EarlyStopping(monitor='val_loss', patience=3, mode='min', restore_best_weights=True)
+    callback = EarlyStopping(monitor='val_loss', patience=5, mode='min', restore_best_weights=True)
 
     epochs = 50
-    history = model1.fit(train_ds, validation_data=val_ds, epochs=epochs, callbacks=[callback])
+    history = model3.fit(train_ds, validation_data=val_ds, epochs=epochs, callbacks=[callback])
+
 
     number_of_epochs_it_ran = range(1, len(history.history['loss']) + 1)
 
-    recall = history.history['recall']
-    val_recall = history.history['val_recall']
+    recall = history.history['recall_2']
+    val_recall = history.history['val_recall_2']
 
-    precision = history.history['precision']
-    val_precision = history.history['val_precision']
+    precision = history.history['precision_2']
+    val_precision = history.history['val_precision_2']
 
-    auc = history.history['auc']
-    val_auc = history.history['val_auc']
+    auc = history.history['auc_2']
+    val_auc = history.history['val_auc_2']
 
     f1_score = history.history['f1_score']
     val_f1_score = history.history['val_f1_score']
