@@ -1,7 +1,7 @@
 import os
 from PIL import Image
+from keras_preprocessing import image
 from utils.xmlUtils import get_attribute_from_xml, get_bound_box_object
-from tensorflow.keras.preprocessing import image
 import numpy as np
 from keras.applications import inception_v3 as inc_net
 from skimage import io

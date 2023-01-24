@@ -21,6 +21,7 @@ def validate_directory(directory, extension):
     else:
         return path
 
+
 def create_dest_folders():
     dest_directory = os.path.join(os.path.dirname(os.getcwd()), "mask_detection")
     if os.path.exists(dest_directory):

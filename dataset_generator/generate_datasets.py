@@ -1,5 +1,5 @@
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.preprocessing import image_dataset_from_directory
+from keras.preprocessing.image import ImageDataGenerator
+from keras.utils import image_dataset_from_directory
 
 train_datagen = ImageDataGenerator(rescale=1 / 255,
                                    validation_split=0.1)
